@@ -1,0 +1,408 @@
+/*--------------------------------*- C++ -*----------------------------------*\
+| =========                 |                                                 |
+| \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox           |
+|  \\    /   O peration     | Version:  7                                     |
+|   \\  /    A nd           | Web:      www.OpenFOAM.com                      |
+|    \\/     M anipulation  |                                                 |
+\*---------------------------------------------------------------------------*/
+FoamFile
+{
+    version     2.0;
+    format      ascii;
+    class       dictionary;
+    object      snappyHexMeshDict;
+}
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+
+castellatedMesh true;
+snap            off;
+addLayers       off;
+
+ref1 4.012475034;
+
+ref #calc "round($ref1/1)";
+
+geometry
+{
+    ahmed35.stl
+    {
+        type triSurfaceMesh;
+        name ahmed35;
+        regions
+        {
+            body
+            {
+                 name       body;
+            }
+            head
+            {
+                 name       head;
+            }
+            slant
+            {
+                 name       slant;
+            }
+            leg
+            {
+                 name       leg;
+            }
+        }
+    }
+
+    refinebox1
+    {
+        type searchableBox;
+        min ( -2.0 -0.9  0.0 );
+        max (  4.0  0.9  0.9 );
+    }
+
+    refinebox2
+    {
+        type searchableBox;
+        min ( -1.7 -0.7  0.0 );
+        max (  1.0  0.7  0.7 );
+    }
+
+    refinebox3
+    {
+        type searchableBox;
+        min ( -1.5 -0.5  0.0 );
+        max (  0.5  0.5  0.5 );
+    }
+
+    refinebox4
+    {
+        type searchableBox;
+        min ( -0.3 -0.3  0.1 );
+        max (  0.3  0.3  0.4 );
+    }
+
+/*
+    box.stl
+    {
+        type triSurfaceMesh;
+        name box_stl;
+    }
+
+    ground_plane
+    {
+        type searchablePlane;
+	planeType pointAndNormal;
+	pointAndNormalDict
+	{
+	    basePoint (0 0 0);
+	    normalVector (0 0 1);
+	}
+    }
+*/
+
+};
+
+// Settings for the castellatedMesh generation.
+castellatedMeshControls
+{
+
+    // Refinement parameters
+
+    maxLocalCells 1000000;
+    maxGlobalCells 20000000;
+    minRefinementCells 10;	//0
+    maxLoadUnbalance 0.10;
+    nCellsBetweenLevels 3;
+
+    // Explicit feature edge refinement
+
+    features
+    (
+        {
+            file "ahmed35.eMesh";
+            level 6;	//4
+	    //levels  ((0 2));
+        }
+    );
+
+    // Surface based refinement
+
+    refinementSurfaces
+    {
+        ahmed35
+        {
+            level ( $ref $ref );
+
+            regions
+            {
+                 body
+                 {
+                     level ( $ref $ref );
+                     patchInfo
+                     {
+                         type wall;
+                         inGroups (AhmedGroup);
+                     }
+                 }
+                 head
+                 {
+                     level ( $ref $ref );
+                     patchInfo
+                     {
+                         type wall;
+                         inGroups (AhmedGroup);
+                     }
+                 }
+                 slant
+                 {
+                     level ( $ref $ref );
+                     patchInfo
+                     {
+                         type wall;
+                         inGroups (AhmedGroup);
+                     }
+                 }
+                 leg
+                 {
+                     level ( $ref $ref );
+                     patchInfo
+                     {
+                         type wall;
+                         inGroups (AhmedGroup);
+                     }
+                 }
+            }
+        }
+
+    }
+
+    resolveFeatureAngle 10;		//30 default
+    planarAngle 30;			
+
+    //- Optional increment (on top of max level) in small gaps
+    gapLevelIncrement 2;
+
+    // Region-wise refinement
+
+    refinementRegions
+    {
+
+        refinebox1
+        {
+            mode inside;
+            levels ((1E15 1));
+        }
+
+        refinebox2
+        {
+            mode inside;
+            levels ((1E15 2));
+        }
+
+        refinebox3
+        {
+            mode inside;
+            levels ((1E15 3));
+        }
+
+        refinebox4
+        {
+            mode inside;
+            levels ((1E15 $ref));
+        }
+
+/*
+        box_stl
+        {
+            mode inside;   
+            levels ((1E15 2)); 
+        }
+
+        ground_plane
+        {
+            mode distance;
+            //levels ((0.06 4));
+            levels ((0.1 1));
+        }
+*/
+    }
+
+    // Mesh selection
+
+    locationInMesh (2 0 1); 
+
+    allowFreeStandingZoneFaces true;
+}
+
+// Settings for the snapping.
+snapControls
+{
+    nSmoothPatch 		3;
+    tolerance 			2.0;
+
+    //default
+    nSolveIter 			30;		
+    nRelaxIter 			5;
+
+    //improved
+    //nSolveIter 			300;		
+    //nRelaxIter 			5;
+
+    nFeatureSnapIter 		10;		//default;
+    //nFeatureSnapIter 		20;		//improved;
+
+    implicitFeatureSnap 	false;
+    explicitFeatureSnap 	true;
+    multiRegionFeatureSnap 	false;
+}
+
+// Settings for the layer addition.
+addLayersControls
+{
+    relativeSizes true;
+
+    // Layer thickness specification. This can be specified in one of following ways:
+    // - expansionRatio and finalLayerThickness (cell nearest internal mesh)
+    // - expansionRatio and firstLayerThickness (cell on surface)
+    // - overall thickness and firstLayerThickness
+    // - overall thickness and finalLayerThickness
+    // - overall thickness and expansionRatio
+
+    expansionRatio 		1.2;
+    finalLayerThickness 	0.7;	//0.7-0.6-0.5-0.3-0.2
+
+    //firstLayerThickness 	0.1;
+    //thickness 		0.6;
+    //minThickness 		0.25;
+    minThickness 		0.0001; 	//0.1
+
+    layers
+    {
+	//"surface.*"
+
+        AhmedGroup
+        {
+            nSurfaceLayers 4;
+            finalLayerThickness 0.7;
+            expansionRatio 1.2;
+        }
+        slant
+        {
+            nSurfaceLayers 4;
+            firstLayerThickness 0.3;
+            expansionRatio 1.2;
+        }
+        minZ
+        {
+            nSurfaceLayers 4;
+            finalLayerThickness 0.7;
+            expansionRatio 1.2;
+        }
+
+/*
+	body
+        {
+            nSurfaceLayers 4;
+        }
+
+	head
+        {
+            nSurfaceLayers 4;
+        }
+
+	leg
+        {
+            nSurfaceLayers 4;
+        }
+
+	slant
+        {
+            nSurfaceLayers 4;
+            firstLayerThickness 0.3;
+            expansionRatio 1.2;
+        }
+*/
+
+/*
+//Absolute size seems not to work well with local refinement
+//First generate one layer using realtive and then use absolute
+//do it with caution
+	//back
+	//ground
+	minZ
+        {
+            nSurfaceLayers 3;
+            //expansionRatio 		1.2;
+            finalLayerThickness 	0.3;
+            //minThickness 		0.001; 
+        }
+*/
+    }
+
+        nGrow 0;
+
+        //featureAngle 0;		//no inflation
+        //featureAngle 60;
+        //featureAngle 130;		//default
+        //featureAngle 270;
+        //featureAngle 330;
+        featureAngle 180;		
+
+        maxFaceThicknessRatio 0.5; 
+	nSmoothSurfaceNormals 1;
+        nSmoothThickness 10;
+        minMedialAxisAngle 130;		//90;
+        minMedianAxisAngle 130;		//90;
+        maxThicknessToMedialRatio 0.3;     
+        nSmoothNormals 10;		//3;
+
+	//nMedialAxisIter  10;		//this deals with propagation of dislocations in corners
+	//nSmoothDisplacement  90;
+      	//detectExtrusionIsland  true;
+
+	slipFeatureAngle 30;
+	nRelaxIter 10;			//5	//3
+        nBufferCellsNoExtrude 0;
+        nLayerIter 50;
+        nRelaxedIter 20;		//*****
+
+        additionalReporting true;	//*****
+}
+
+meshQualityControls
+{
+    #include "meshQualityDict"
+
+    relaxed				//*****
+    {
+        maxNonOrtho 75; // Maximum non-orthogonality allowed. Set to 180 to disable.
+    }
+
+    // Advanced
+    nSmoothScale 4;
+    errorReduction 0.75;
+}
+
+// Advanced
+
+//debug 0;   //3
+
+//// Debug flags
+debugFlags
+(
+    //mesh            // write intermediate meshes
+    //intersections   // write current mesh intersections as .obj files
+    //featureSeeds    // write information about explicit feature edge refinement
+    //attraction      // write attraction as .obj files
+    //layerInfo       // write information about layers
+);
+
+//// Write flags
+writeFlags
+(
+    scalarLevels    // write volScalarField with cellLevel for postprocessing
+    layerSets       // write cellSets, faceSets of faces in layer
+    layerFields     // write volScalarField for layer coverage
+);
+
+// Merge tolerance. Is fraction of overall bounding box of initial mesh.
+// Note: the write tolerance needs to be higher than this.
+mergeTolerance 1e-6;
+
+// ************************************************************************* //

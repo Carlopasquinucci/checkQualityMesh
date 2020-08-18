@@ -1,0 +1,167 @@
+/*---------------------------------------------------------------------------*\
+  =========                 |
+  \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox
+   \\    /   O peration     | Website:  https://openfoam.org
+    \\  /    A nd           | Version:  7
+     \\/     M anipulation  |
+\*---------------------------------------------------------------------------*/
+Build  : 7-63349425784a
+Exec   : checkMesh
+Date   : Aug 17 2020
+Time   : 15:58:25
+Host   : "localhost.localdomain"
+PID    : 98643
+I/O    : uncollated
+Case   : /home/cfdthz01/openFoam/openFoam8/OpenFOAM-dev/tutorials/incompressible/simpleFoam/motorBike
+nProcs : 1
+sigFpe : Enabling floating point exception trapping (FOAM_SIGFPE).
+fileModificationChecking : Monitoring run-time modified files using timeStampMaster (fileModificationSkew 10)
+allowSystemOperations : Allowing user-supplied system call operations
+
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+Create time
+
+Create polyMesh for time = 0
+
+Time = 0
+
+Mesh stats
+    points:           404435
+    faces:            1102903
+    internal faces:   1052851
+    cells:            351909
+    faces per cell:   6.12588
+    boundary patches: 72
+    point zones:      0
+    face zones:       0
+    cell zones:       0
+
+Overall number of cells of each type:
+    hexahedra:     306917
+    prisms:        7278
+    wedges:        928
+    pyramids:      5
+    tet wedges:    1662
+    tetrahedra:    51
+    polyhedra:     35068
+    Breakdown of polyhedra by number of faces:
+        faces   number of cells
+            4   3943
+            5   6527
+            6   5467
+            7   2964
+            8   1295
+            9   10612
+           10   14
+           11   8
+           12   2338
+           13   2
+           15   1629
+           17   1
+           18   266
+           21   2
+
+Checking topology...
+    Boundary definition OK.
+    Cell to face addressing OK.
+    Point usage OK.
+    Upper triangular ordering OK.
+    Face vertices OK.
+    Number of regions: 1 (OK).
+
+Checking patch topology for multiply connected surfaces...
+                   Patch    Faces   Points                  Surface topology
+            frontAndBack      360      420  ok (non-closed singly connected)
+                   inlet       72       90  ok (non-closed singly connected)
+                  outlet       72       90  ok (non-closed singly connected)
+               lowerWall     5349     5678  ok (non-closed singly connected)
+               upperWall      160      189  ok (non-closed singly connected)
+    motorBike_frt-fairing:001%1     5332     9858  multiply connected (shared edge)
+    motorBike_windshield:002%2       50       83  ok (non-closed singly connected)
+    motorBike_rr-wh-rim:005%5      121      222  ok (non-closed singly connected)
+    motorBike_rr-wh-rim:010%10      355      676  ok (non-closed singly connected)
+    motorBike_fr-wh-rim:011%11      504      826  ok (non-closed singly connected)
+    motorBike_fr-wh-brake-disk:012%12       47       90  ok (non-closed singly connected)
+    motorBike_frame:016-shadow%13      106      219  ok (non-closed singly connected)
+    motorBike_rear-susp:014%14      785     1471  ok (non-closed singly connected)
+    motorBike_rear-susp:014-shadow%15      495     1246  ok (non-closed singly connected)
+    motorBike_frame:016%16       59      160  ok (non-closed singly connected)
+    motorBike_rr-wh-rim:005-shadow%17       67      166  ok (non-closed singly connected)
+    motorBike_rr-wh-chain-hub:022%22      129      214  ok (non-closed singly connected)
+    motorBike_rearseat%24      421      513  ok (non-closed singly connected)
+    motorBike_frt-fairing%25      617      851  ok (non-closed singly connected)
+    motorBike_windshield%26      383      814  ok (non-closed singly connected)
+    motorBike_headlights%27      154      254  ok (non-closed singly connected)
+    motorBike_driversseat%28      358      546  ok (non-closed singly connected)
+    motorBike_rear-body%29     2040     2521  ok (non-closed singly connected)
+    motorBike_fuel-tank%30      887     1227  ok (non-closed singly connected)
+    motorBike_exhaust%31     2330     2983  ok (non-closed singly connected)
+    motorBike_rr-wh-rim%32     1374     1737  ok (non-closed singly connected)
+    motorBike_fr-mud-guard%33      618     1215  ok (non-closed singly connected)
+    motorBike_fr-wh-rim%34      576      795  ok (non-closed singly connected)
+    motorBike_fr-wh-brake-disk%35      431      689  ok (non-closed singly connected)
+    motorBike_fr-brake-caliper%36      158      213  ok (non-closed singly connected)
+    motorBike_fr-wh-tyre%37     1109     1553  ok (non-closed singly connected)
+      motorBike_hbars%38      524      676  multiply connected (shared edge)
+    motorBike_fr-forks%39     1097     1464  ok (non-closed singly connected)
+      motorBike_chain%40      455      576  ok (non-closed singly connected)
+    motorBike_rr-wh-tyre%41     1841     2425  ok (non-closed singly connected)
+    motorBike_square-dial%42        6       12  ok (non-closed singly connected)
+    motorBike_round-dial%43       15       29  ok (non-closed singly connected)
+    motorBike_dial-holder%44       87      132  ok (non-closed singly connected)
+    motorBike_rear-susp%45     1719     2159  multiply connected (shared edge)
+    motorBike_rear-brake-lights%46       54       87  ok (non-closed singly connected)
+    motorBike_rear-light-bracket%47      156      205  ok (non-closed singly connected)
+      motorBike_frame%48     2008     2452  ok (non-closed singly connected)
+    motorBike_rear-mud-guard%49      627     1203  ok (non-closed singly connected)
+    motorBike_rear-susp-spring-damp%50       85      173  ok (non-closed singly connected)
+    motorBike_fairing-inner-plate%51      438      561  ok (non-closed singly connected)
+    motorBike_clutch-housing%52      920     1104  ok (non-closed singly connected)
+    motorBike_radiator%53       50       85  multiply connected (shared edge)
+    motorBike_water-pipe%54       94      111  multiply connected (shared edge)
+    motorBike_water-pump%55       73      100  ok (non-closed singly connected)
+     motorBike_engine%56     2310     2586  ok (non-closed singly connected)
+    motorBike_rear-shock-link%57       25       50  ok (non-closed singly connected)
+    motorBike_rear-brake-fluid-pot-bracket%58       47       83  ok (non-closed singly connected)
+    motorBike_rear-brake-fluid-pot%59       50       62  ok (non-closed singly connected)
+    motorBike_footpeg%60       89      125  ok (non-closed singly connected)
+    motorBike_rr-wh-chain-hub%61      113      235  ok (non-closed singly connected)
+    motorBike_rear-brake-caliper%62      143      174  ok (non-closed singly connected)
+    motorBike_rider-helmet%65      760     1010  ok (non-closed singly connected)
+    motorBike_rider-visor%66      165      266  ok (non-closed singly connected)
+    motorBike_rider-boots%67     1006     1331  ok (non-closed singly connected)
+    motorBike_rider-gloves%68      310      400  ok (non-closed singly connected)
+    motorBike_rider-body%69     4556     5767  multiply connected (shared edge)
+    motorBike_frame:0%70       38       62  ok (non-closed singly connected)
+    motorBike_frt-fairing:001-shadow%74     3248     8363  ok (non-closed singly connected)
+    motorBike_windshield-shadow%75      250      670  ok (non-closed singly connected)
+    motorBike_fr-mud-guard-shadow%81      375      982  ok (non-closed singly connected)
+    motorBike_fr-wh-brake-disk-shadow%83      202      507  ok (non-closed singly connected)
+    motorBike_rear-mud-guard-shadow%84      427     1067  ok (non-closed singly connected)
+    motorBike_rear-susp-spring-damp-shadow%85       38      118  ok (non-closed singly connected)
+    motorBike_radiator-shadow%86       25       65  multiply connected (shared edge)
+    motorBike_rear-shock-link-shadow%87       10       32  ok (non-closed singly connected)
+    motorBike_rear-brake-fluid-pot-bracket-shadow%88       22       61  ok (non-closed singly connected)
+    motorBike_rr-wh-chain-hub-shadow%89       75      189  ok (non-closed singly connected)
+  <<Writing 18 conflicting points to set nonManifoldPoints
+
+Checking geometry...
+    Overall domain bounding box (-5 -4 0) (15 4 8)
+    Mesh has 3 geometric (non-empty/wedge) directions (1 1 1)
+    Mesh has 3 solution (non-empty) directions (1 1 1)
+    Boundary openness (-5.82782e-18 2.85541e-17 -1.00349e-15) OK.
+    Max cell openness = 7.06986e-16 OK.
+    Max aspect ratio = 40.8767 OK.
+    Minimum face area = 1.1841e-06. Maximum face area = 1.01336.  Face area magnitudes OK.
+    Min volume = 1.6971e-08. Max volume = 1.00525.  Total volume = 1279.67.  Cell volumes OK.
+    Mesh non-orthogonality Max: 64.996 average: 9.89443
+    Non-orthogonality check OK.
+    Face pyramids OK.
+ ***Max skewness = 10.6907, 12 highly skew faces detected which may impair the quality of the results
+  <<Writing 12 skew faces to set skewFaces
+    Coupled point location match (average 0) OK.
+
+Failed 1 mesh checks.
+
+End
+
