@@ -79,4 +79,3 @@ if ! [[ $1 == "-verbose" ]] ; then
    rm -r check
 fi
 
-
